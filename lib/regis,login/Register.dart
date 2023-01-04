@@ -12,6 +12,7 @@ import 'package:tangteevs/helper/helper_function.dart';
 import 'package:tangteevs/Homepage.dart';
 import '../team/privacy.dart';
 import '../team/team.dart';
+import '../utils/color.dart';
 import 'Login.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -562,8 +563,18 @@ class _RegistrationScreen extends State<RegisterPage> {
         _isLoading = true;
       });
       await authService
-          .registerUserWithEmailandPassword(fullName, email, password,
-              Imageidcard, age, ImageProfile, Displayname, gender, bio, isadmin,)
+          .registerUserWithEmailandPassword(
+        fullName,
+        email,
+        password,
+        Imageidcard,
+        age,
+        ImageProfile,
+        Displayname,
+        gender,
+        bio,
+        isadmin,
+      )
           .then((value) async {
         if (value == true) {
           // saving the shared preference state

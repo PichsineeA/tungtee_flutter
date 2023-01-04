@@ -10,6 +10,7 @@ import 'package:tangteevs/utils/showSnackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../regis,login/Login.dart';
+import '../utils/color.dart';
 import '../widgets/custom_textfield.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -519,9 +520,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                       context)
                                                                   .push(
                                                                 MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Comment(),
+                                                                  builder: (context) => Comment(
+                                                                      postid: snapshot
+                                                                          .data!
+                                                                          .docs[index]),
                                                                 ),
                                                               );
                                                             },
@@ -798,7 +800,9 @@ class _PostPageState extends State<PostPage> {
                                       onPressed: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => Comment(),
+                                            builder: (context) => Comment(
+                                                postid:
+                                                    snapshot.data!.docs[index]),
                                           ),
                                         );
                                       },

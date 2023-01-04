@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tangteevs/HomePage.dart';
 import 'package:tangteevs/comment.dart';
+import 'package:tangteevs/utils/color.dart';
 import 'services/auth_service.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,86 +48,100 @@ class SearchForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
-          backgroundColor: mobileBackgroundColor,
-          elevation: 0,
-          centerTitle: false,
-          title: const SizedBox(
-            width: 350.0,
-            height: 45.0,
-            child: TextField(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(width: 2, color: lightOrange),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(width: 1, color: orange),
-                ),
-                hintText: 'ค้นหากิจกรรม หรือ Tag ที่คุณสนใจ',
-                hintStyle: TextStyle(
-                  color: unselected,
-                  fontFamily: 'MyCustomFont',
-                ),
-                suffixIcon: Icon(
-                  Icons.search_outlined,
-                  color: orange,
-                  size: 30,
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              //preferredSize: const Size.fromHeight(80),
+              //child: AppBar(
+              floating: true,
+              snap: true,
+              forceElevated: innerBoxIsScrolled,
+              backgroundColor: mobileBackgroundColor,
+              elevation: 0,
+              centerTitle: false,
+              title: const Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: SizedBox(
+                  width: 350.0,
+                  height: 45.0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderSide: BorderSide(width: 2, color: lightOrange),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderSide: BorderSide(width: 1, color: orange),
+                      ),
+                      hintText: 'ค้นหากิจกรรม หรือ Tag ที่คุณสนใจ',
+                      hintStyle: TextStyle(
+                        color: unselected,
+                        fontFamily: 'MyCustomFont',
+                      ),
+                      suffixIcon: Icon(
+                        Icons.search_outlined,
+                        color: orange,
+                        size: 30,
+                      ),
+                    ),
+                  ),
                 ),
               ),
+              actions: [
+                PopupMenuButton(
+                    itemBuilder: (context) {
+                      return [
+                        const PopupMenuItem<int>(
+                          value: 0,
+                          child: Text("Make for you"),
+                        ),
+                        const PopupMenuItem<int>(
+                          value: 1,
+                          child: Text("New to you"),
+                        ),
+                      ];
+                    },
+                    icon: const Icon(
+                      Icons.filter_list,
+                      color: green,
+                      size: 30,
+                    ),
+                    onSelected: (value) {
+                      if (value == 0) {
+                        final snackBar = SnackBar(
+                          content: const Text("Display feed for you"),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else if (value == 1) {
+                        final snackBar = SnackBar(
+                          content: const Text("Display new for you"),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    }),
+              ],
             ),
-          ),
-          actions: [
-            PopupMenuButton(
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem<int>(
-                      value: 0,
-                      child: Text("Make for you"),
-                    ),
-                    const PopupMenuItem<int>(
-                      value: 1,
-                      child: Text("New to you"),
-                    ),
-                  ];
-                },
-                icon: const Icon(
-                  Icons.filter_list,
-                  color: green,
-                  size: 30,
-                ),
-                onSelected: (value) {
-                  if (value == 0) {
-                    final snackBar = SnackBar(
-                      content: const Text("Display feed for you"),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        onPressed: () {
-                          // Some code to undo the change.
-                        },
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else if (value == 1) {
-                    final snackBar = SnackBar(
-                      content: const Text("Display new for you"),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        onPressed: () {
-                          // Some code to undo the change.
-                        },
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                }),
-          ],
-        ),
+            //),
+          ];
+        },
+        body: PostCard(),
       ),
-      body: PostCard(),
+      //body: PostCard(),
     );
   }
 }
@@ -174,7 +189,7 @@ class PostCard extends StatelessWidget {
                       margin: const EdgeInsets.all(10),
                       child: SizedBox(
                         width: 380,
-                        height: 190,
+                        height: 200,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 15.00),
                           child: SingleChildScrollView(
@@ -314,9 +329,11 @@ class PostCard extends StatelessWidget {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.of(context).push(
+                                        Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
-                                            builder: (context) => Comment(),
+                                            builder: (context) => Comment(
+                                                postid: streamSnapshot
+                                                    .data!.docs[index]),
                                           ),
                                         );
                                       },

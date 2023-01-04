@@ -6,10 +6,10 @@ import 'package:tangteevs/regis,login/Register.dart';
 import 'package:tangteevs/widgets/custom_textfield.dart';
 import 'team/team.dart';
 import 'team/privacy.dart';
+import 'utils/color.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
-
 
   @override
   State<LandingPage> createState() => _LandingPageState();

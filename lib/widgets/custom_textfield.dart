@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/color.dart';
+import '../utils/color.dart';
 
 const textInputDecoration = InputDecoration(
   labelStyle: TextStyle(color: Colors.black),

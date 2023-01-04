@@ -62,6 +62,8 @@ dependencies:
   # For accessing cloud firestore database
   cloud_firestore: ^4.3.1
   fluent_ui: ^4.1.2
+  favorite_button: ^0.0.4
+  url_launcher: ^6.1.7
 
 flutter_icons:
  android: true
